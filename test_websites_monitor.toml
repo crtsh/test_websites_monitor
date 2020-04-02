@@ -1,11 +1,11 @@
-# Default DB connection settings
+# DB connection settings
 # conninfo to be supplied via the "-conninfo" command-line parameter.
 connopen = 2
 connidle = 2
 connlife = "10m"
 
-# Default workload settings
-interval = "1s"
+# Workload settings
+interval = "0s"
 batch = 5000
 concurrent = 100
 
