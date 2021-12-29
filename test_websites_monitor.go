@@ -273,7 +273,7 @@ func (wi *WorkItem) Perform(db *sql.DB, w *Work) {
 		if resp.StatusCode != 200 {
 			wi.test_website_status[i] = fmt.Sprintf("HTTP: %d", resp.StatusCode)
 		} else if resp_body, err := ioutil.ReadAll(resp.Body); err != nil {
-			wi.test_website_status[i] = "HTTP: Response read error"
+			wi.test_website_status[i] = fmt.Sprintf("HTTP: Response read error (%v)", err)
 		} else {
 			switch strings.Split(http.DetectContentType(resp_body), ";")[0] {
 				case "text/html", "text/xml": wi.test_website_status[i] = "OK"
