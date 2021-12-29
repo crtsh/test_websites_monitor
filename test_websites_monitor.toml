@@ -10,4 +10,4 @@ batch = 5000
 concurrent = 100
 
 # Other default settings
-httptimeout = "30s"
+httptimeout = "60s"
