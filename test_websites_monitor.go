@@ -144,6 +144,7 @@ func (wi *WorkItem) Perform(db *sql.DB, w *Work) {
 			continue
 		}
 
+		req.Host = strings.ToLower(test_website_url.Host)
 		req.Header.Set("User-Agent", "crt.sh")
 		resp, err := w.http_client.Do(req)
 		if err != nil {
