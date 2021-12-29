@@ -214,7 +214,7 @@ func (wi *WorkItem) Perform(db *sql.DB, w *Work) {
 		}
 		if _, err := resp.TLS.PeerCertificates[0].Verify(opts); err != nil {
 			switch {
-				case err.Error() == "x509: certificate has expired or is not yet valid":
+				case strings.HasPrefix(err.Error(), "x509: certificate has expired or is not yet valid"):
 					if i == EXPIRED {
 						wi.test_website_status[i] = "Already invalid at expiry"
 					} else {
