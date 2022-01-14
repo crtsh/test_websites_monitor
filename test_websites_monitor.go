@@ -31,6 +31,7 @@ import (
 	"net/url"
 	"strings"
 	"time"
+	"unicode/utf8"
 )
 
 type config struct {
@@ -276,7 +277,12 @@ func (wi *WorkItem) Perform(db *sql.DB, w *Work) {
 		} else if resp_body, err := ioutil.ReadAll(resp.Body); err != nil {
 			wi.test_website_status[i] = fmt.Sprintf("HTTP: Response read error (%v)", err)
 		} else {
-			switch strings.Split(http.DetectContentType(resp_body), ";")[0] {
+			// Remove the UTF-8 BOM (if present).
+			r, offset := utf8.DecodeRune(resp_body)
+			if r != '\uFEFF' {
+				offset = 0
+			}
+			switch strings.Split(http.DetectContentType(resp_body[offset:]), ";")[0] {
 				case "text/html", "text/xml": wi.test_website_status[i] = "OK"
 				default: wi.test_website_status[i] = "Not HTML"
 			}
